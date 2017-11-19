@@ -1202,6 +1202,9 @@ case $os in
 	-mac*)
 		os=`echo $os | sed -e 's|mac|macos|'`
 		;;
+	-haiku*)
+		os=-haiku
+		;;
 	-linux-dietlibc)
 		os=-linux-dietlibc
 		;;
