@@ -80,7 +80,10 @@ AC_SEARCH_LIBS([socket], [socket], [],
   LIBS="-lws2_32 $LIBS"],
   [],
   [#include <windows.h>])])
- 
+
+dnl Check for libs on Haiku
+AC_SEARCH_LIBS([network],[bnetapi],[],[LIBS="-lnetwork -lbnetapi $LIBS"])
+
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([arpa/inet.h libintl.h netdb.h netinet/in.h stdlib.h string.h strings.h sys/socket.h sys/time.h syslog.h unistd.h signal.h])
