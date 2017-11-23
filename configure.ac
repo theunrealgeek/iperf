@@ -82,7 +82,10 @@ AC_SEARCH_LIBS([socket], [socket], [],
   [#include <windows.h>])])
 
 dnl Check for libs on Haiku
-AC_SEARCH_LIBS([network],[bnetapi],[],[LIBS="-lnetwork -lbnetapi $LIBS"])
+UNAME_SYSTEM=`(uname -s) 2>/dev/null`  || UNAME_SYSTEM=unknown
+if test "${UNAME_SYSTEM}" = "Haiku"; then
+  LIBS="-lnetwork $LIBS"
+fi
 
 dnl Checks for header files.
 AC_HEADER_STDC
