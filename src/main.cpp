@@ -109,6 +109,36 @@ nthread_t sThread;
 // for all other threads to complete
 void waitUntilQuit( void );
 
+#ifdef __HAIKU__
+int daemon(int nochdir, int noclose){
+    switch(fork()){
+        case -1:
+            return (-1);
+            break;
+        case 0:
+            break;
+        default:
+            exit(0);
+    }
+
+    if(setsid() == -1)
+        return (-1);
+
+    if (!nochdir)
+        chdir("/");
+
+    if(!noclose){
+        int fd_null = open("/dev/null",O_RDWR);
+        if (fd_null < 0)
+            return -1;
+        dup2(fd_null,STDIN_FILENO);
+        dup2(fd_null,STDOUT_FILENO);
+        dup2(fd_null,STDERR_FILENO);
+    }
+    return 0;
+}
+#endif
+
 /* -------------------------------------------------------------------
  * main()
  *      Entry point into Iperf
